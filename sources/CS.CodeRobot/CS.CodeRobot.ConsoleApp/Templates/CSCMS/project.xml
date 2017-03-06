@@ -4,8 +4,8 @@
     <DbSetting DbConnName="ManageDb" Name="Manage" DbContextName="ManageDbContent" />
 	<DbSetting DbConnName="DbConfigDb" Name="DbConfig" DbContextName="DbConfigDbContent" />
   </DbConns>
-  <TemplatesRootDirectory>D:\projects\cszi.visualstudio.com\CSCMSV6\tools\CodeGenerator\Templates\EFRespository\</TemplatesRootDirectory>
-  <OutputRootDirectory>D:\projects\cszi.visualstudio.com\CSCMSV6\sources\CSCMS\</OutputRootDirectory>
+  <Name>CSCMS</Name>
+  <OutputRootDirectory>C:\swap\</OutputRootDirectory>
   <Namespace>CS.CMS</Namespace>
   <Company>cszi.com</Company>
   <Copyright>cszi.com</Copyright>

@@ -1,4 +1,6 @@
-﻿namespace CS.CodeRobot
+﻿using CS.CodeRobot.Generators;
+
+namespace CS.CodeRobot
 {
     class Program
     {
@@ -7,11 +9,13 @@
 
             //DotLiquidDemo.Run();
 
-            DotLiquidDemo.RunExt();
+            //DotLiquidDemo.RunExt();
 
             //DataSchemaDemo.Run();
 
-            //http://atwind.cnblogs.com
+            //DotLiquidDemo.RunCMS();
+
+            Generator.Run(args);
 
         }
     }
