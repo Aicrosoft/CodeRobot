@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("CS.CodeRobot.Generator")]
-[assembly: AssemblyDescription("代码自动生成入口")]
+[assembly: AssemblyDescription("代码自动生成器")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("cszi.com")]
 [assembly: AssemblyProduct("CS.CodeRobot.Generator")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.*")]
+[assembly: AssemblyVersion("1.3.1.*")]
 //[assembly: AssemblyFileVersion("1.0.0.0")]

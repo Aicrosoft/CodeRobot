@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("CS.CodeRobot.SchemaExplorer")]
-[assembly: AssemblyDescription("架构分析模块")]
+[assembly: AssemblyTitle("$model.AssemblyName")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("cszi.com")]
-[assembly: AssemblyProduct("CS.CodeRobot.SchemaExplorer")]
-[assembly: AssemblyCopyright("Copyright ©  cszi.com 2017")]
-[assembly: AssemblyTrademark("CSWare")]
+[assembly: AssemblyCompany("$model.AssemblyCompany")]
+[assembly: AssemblyProduct("$model.AssemblyProduct")]
+[assembly: AssemblyCopyright("Copyright © ${model.AssemblyCopyright}  ${model.Now.Year}")]
+[assembly: AssemblyTrademark("$model.AssemblyTrademark")]
 [assembly: AssemblyCulture("")]
 
 //将 ComVisible 设置为 false 将使此程序集中的类型
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("2ad3a509-e59a-45c8-9367-b6e9a22394c7")]
+[assembly: Guid("$model.Guid")]
 
 // 程序集的版本信息由下列四个值组成: 
 //
@@ -31,9 +31,5 @@ using System.Runtime.InteropServices;
 //
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: :
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.*")]
-//[assembly: AssemblyFileVersion("1.0.0.0")]
-
-
-
+//[assembly: AssemblyFileVersion("4.6.0.0")]

@@ -4,12 +4,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CS.CodeRobot.TemplateEngine;
+using CS.Extension;
+using CS.Logging;
 using DotLiquid;
 
 namespace CS.CodeRobot
 {
     public class DotLiquidDemo
     {
+
+        public static void RunCMS()
+        {
+            var log = LogManager.GetLogger(typeof (DotLiquidDemo));
+            //log.Debug("this is a Debug");
+            //log.Info("this is a Info");
+            //log.Warn("this is a Warn");
+            //log.Error("this is a Error");
+            //log.Fatal("this is a Fatal");
+
+
+            //var p = App.GetProject("CSCMS");
+            //log.Debug(p.ToJsonByJc());
+
+
+
+
+            Console.ReadLine();
+            return;
+
+
+
+
+
+            // 在原有的代码下添加,否则将不能显示描绘的对象
+            Template.RegisterSafeType(typeof(ExampleViewModel), Hash.FromAnonymousObject);
+            // 在原有的代码下添加
+            Template.FileSystem = new DotliquidTemplateFileSystem();
+            var path = $"~/Templates/CSCMS/app.tpl";
+            //var path = $"~/Templates/demo.tpl";
+            // 根据路径读取模板内容
+            var templateStr = Template.FileSystem.ReadTemplateFile(new Context(), "'" + path + "'");
+            // 解析模板，这里可以缓存Parse出来的对象，但是为了简单这里就略去了
+            var template = Template.Parse(templateStr);
+            // 描画模板
+            var m = new ExampleViewModel();
+            m.Age = 31;
+            m.Name = "atwind zhou";
+            var pms = Hash.FromAnonymousObject(new { m });
+            var result = template.Render(pms);
+            // 返回描画出来的内容
+            // return Content(result, "text/html");
+            Console.WriteLine(result);
+
+
+            Console.ReadLine();
+        }
 
         public static void RunExt()
         {

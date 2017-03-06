@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectMeta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DbConns>
+    <DbSetting DbConnName="ManageDb" Name="Manage" DbContextName="ManageDbContext" />
+	<DbSetting DbConnName="ConfigDb" Name="Config" DbContextName="ConfigDbContext" />
+  </DbConns>
+  <Name>CSCMS</Name>
+  <!-- 项目源代码所在根目录 -->
+  <OutputRootDirectory>D:\projects\bitbucket.org\eRobot\sources\CS.eRobot.Generator\</OutputRootDirectory>
+  <Namespace>CS.CMS</Namespace>
+  <Company>cszi.com</Company>
+  <Copyright>cszi.com</Copyright>
+</ProjectMeta>
