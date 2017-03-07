@@ -41,11 +41,17 @@ namespace CS.CodeRobot.TemplateEngine
         /// 渲染出结果
         /// </summary>
         /// <param name="relFile"></param>
-        /// <param name="objects"></param>
+        /// <param name="anonymousObject">
+        /// 形如:
+        /// <code>
+        /// new{ pi, ai }
+        /// </code>
+        /// 其中pi,ai 即是在模板中的引用模型变量名称
+        /// </param>
         /// <returns></returns>
-        public string Render(string relFile, params object[] objects)
+        public string Render(string relFile, object anonymousObject)
         {
-            var pms = Hash.FromAnonymousObject(new {objects});
+            var pms = Hash.FromAnonymousObject(anonymousObject);
             var template = GeTemplate(relFile);
             var result = template.Render(pms);
             return result;

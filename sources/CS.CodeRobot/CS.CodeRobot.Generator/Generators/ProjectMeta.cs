@@ -82,7 +82,8 @@ namespace CS.CodeRobot.Generators
         public string GetTemplateDirectory(string modelLayer)
         {
             //return GetTemplateDirectory(modelLayer);
-            return $"{TemplatesRootDirectory}{modelLayer}\\";
+            var rePath =  $"{TemplatesRootDirectory}{modelLayer}/";
+            return FileHelper.GetFullPath(rePath);
         }
         /// <summary>
         /// 返回指定模型层的输出根目录
@@ -93,6 +94,18 @@ namespace CS.CodeRobot.Generators
         {
             //return GetOutputDirectory(modelLayer);
             return $"{OutputRootDirectory}{Namespace}.Respository\\{Namespace}.{modelLayer}\\";
+        }
+
+        /// <summary>
+        /// 返回子目录（如果存在的话）
+        /// </summary>
+        /// <param name="modelLayer"></param>
+        /// <param name="subFolder"></param>
+        /// <returns></returns>
+        public string GetOutputDirectory(string modelLayer, string subFolder)
+        {
+            var path = $"{GetOutputDirectory(modelLayer)}{subFolder}\\".Replace("\\\\", "\\");
+            return path;
         }
 
         //string GetTemplateDirectory(string assemblyName)
@@ -123,24 +136,24 @@ namespace CS.CodeRobot.Generators
 
     }
 
-    public enum ModelStyleType
-    {
-        /// <summary>
-        /// Model层
-        /// </summary>
-        Model,
+    //public enum ModelStyleType
+    //{
+    //    /// <summary>
+    //    /// Model层
+    //    /// </summary>
+    //    Model,
 
-        /// <summary>
-        /// Db访问层
-        /// </summary>
-        DbAccess,
+    //    /// <summary>
+    //    /// Db访问层
+    //    /// </summary>
+    //    DbAccess,
 
-        /// <summary>
-        /// Db访问代理（缓存层）
-        /// </summary>
-        DbProxy,
+    //    /// <summary>
+    //    /// Db访问代理（缓存层）
+    //    /// </summary>
+    //    DbProxy,
 
-    }
+    //}
 
     /// <summary>
     /// 程序集配置

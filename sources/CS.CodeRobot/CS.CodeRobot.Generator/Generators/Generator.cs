@@ -13,7 +13,7 @@ namespace CS.CodeRobot.Generators
     {
         private static readonly ILog log = LogManager.GetLogger(typeof (Generator));
 
-        private static readonly TemplateApp _templateApp = new TemplateApp();
+        private static readonly TemplateApp _templateApp = GeneratorFilter.TemplateApp;
 
         public static void Run(string[] args)
         {
@@ -25,45 +25,37 @@ namespace CS.CodeRobot.Generators
             var pfName = args[0];
             var app = new App(pfName);
             var pi = app.ProjectInfo;
-            foreach (var setting in pi.DbConns)
-            {
-                
-            }
-            log.Warn(pfName);
-
+            GeneratorFilter.ProjectInfo = pi;
             var rootTemplateFolders = FileHelper.GetFullPath(pi.TemplatesRootDirectory);
-            var x = FileHelper.GetSubDictionary(rootTemplateFolders);
+            var subs = FileHelper.GetSubFolderNames(rootTemplateFolders); //子模板目录
+            if (subs.Length == 0)
+            {
+                log.Warn("子模板不存在，无法生成项目。");
+                return;
+            }
+            var result = _templateApp.Render($"{rootTemplateFolders}index.tpl", new { subs,pi });
+            log.Info(result);
 
-            Console.WriteLine(rootTemplateFolders);
-            
-            //var dbSchemaExplor = new DataSchemaExplor("Swap");
-            //var dbSchema = dbSchemaExplor.ReadAll();
-            //log.Debug(dbSchema.ToJsonByJc());
-            var ai = new AssemblySetting("Model", pi);//assemblyInfo
-            CreateAssemblyFile(pi, ai);
+            //开始运行项目子模板
+            foreach (var sub in subs)
+            {
+                result = _templateApp.Render($"{rootTemplateFolders}{sub}//index.tpl", new {  sub, pi });
+                log.Info(result);
+            }
 
+            //foreach (var sub in subs)
+            //{
+            //    //Console.WriteLine(rootTemplateFolders);
+            //    //var dbSchemaExplor = new DataSchemaExplor("Swap");
+            //    //var dbSchema = dbSchemaExplor.ReadAll();
+            //    //log.Debug(dbSchema.ToJsonByJc());
+            //    var ai = new AssemblySetting(sub, pi);//assemblyInfo
+            //    CreateAssemblyFile(pi, ai);
+            //}
 
-
-            Console.ReadLine();
-
+            Console.WriteLine(@"press any key to close.");
+            Console.ReadKey();
         }
-
-
-
-        /// <summary>
-        /// 生成程序集信息
-        /// </summary>
-        /// <param name="pi"></param>
-        /// <param name="ai"></param>
-        public static void CreateAssemblyFile(ProjectMeta pi,AssemblySetting ai)
-        {
-            var fileName = $"{pi.TemplatesRootDirectory}AssemblyInfo.tpl";
-            var result = _templateApp.Render(fileName,pi,ai );
-            log.Debug(result);
-
-            var asFile = $"{pi.GetOutputDirectory(ai.ModelLayer)}Properties\\AssemblyInfo.cs";
-            FileHelper.Save(asFile, result);
-            log.Info("Model 程序集信息写入完成");
-        }
+       
     }
 }

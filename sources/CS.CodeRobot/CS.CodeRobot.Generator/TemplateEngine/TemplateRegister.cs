@@ -19,6 +19,9 @@ namespace CS.CodeRobot.TemplateEngine
             //Template.FileSystem = new DotliquidTemplateFileSystem();
         }
 
+        /// <summary>
+        /// 注册类型
+        /// </summary>
         public static void RegisterTypes()
         {
             //Template.RegisterSafeType(typeof(AssemblySetting), Hash.FromAnonymousObject);
@@ -27,6 +30,7 @@ namespace CS.CodeRobot.TemplateEngine
             RegisterTypes(new[] {
                 typeof(AssemblySetting),
                 typeof(DbSetting),
+                typeof(ProjectMeta),
                 //typeof(DateTime),
 
             });
@@ -40,12 +44,16 @@ namespace CS.CodeRobot.TemplateEngine
             }
         }
 
-
+        /// <summary>
+        /// 注册过滤器
+        /// </summary>
         public static void RegisterFilters()
         {
             RegisterFilters(new[] {
                 typeof(DateTimeFilter),
-                typeof(DemoFilter),
+                //typeof(DemoFilter),
+                typeof(GeneratorFilter),
+                typeof(TemaplteFilter),
 
             });
         }
