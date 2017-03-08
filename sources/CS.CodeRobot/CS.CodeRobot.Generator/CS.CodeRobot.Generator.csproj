@@ -34,6 +34,7 @@
       <HintPath>..\..\packages\DotLiquid.2.0.64\lib\net451\DotLiquid.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -49,6 +50,12 @@
     <Compile Include="DataSchemaDemo.cs" />
     <Compile Include="DotLiquidDemo.cs" />
     <Compile Include="Generators\CodeFile.cs" />
+    <Compile Include="Generators\DbSetting.cs" />
+    <Compile Include="Generators\ModelMeta.cs" />
+    <Compile Include="JsDemo.cs" />
+    <Compile Include="JsGenerators\JsGenerator.cs" />
+    <Compile Include="JsSample.cs" />
+    <Compile Include="TemplateEngine\DatabaseTableDrop.cs" />
     <Compile Include="TemplateEngine\TemaplteFilter.cs" />
     <Compile Include="Generators\Generator.cs" />
     <Compile Include="Generators\ProjectMeta.cs" />

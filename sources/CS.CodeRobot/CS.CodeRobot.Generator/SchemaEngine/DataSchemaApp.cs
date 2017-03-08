@@ -16,10 +16,10 @@ namespace CS.CodeRobot.SchemaEngine
 
         readonly DatabaseReader _databaseReader;
 
-        /// <summary>
-        /// 返回所有表
-        /// </summary>
-        public IList<DatabaseTable> AllTables => _databaseReader.AllTables();
+        ///// <summary>
+        ///// 返回所有表
+        ///// </summary>
+        //public IList<DatabaseTable> AllTables => _databaseReader.AllTables();
 
         public DatabaseSchema ReadAll()
         {
@@ -32,6 +32,12 @@ namespace CS.CodeRobot.SchemaEngine
 
 
             return all;
+        }
+
+        public IList<DatabaseTable> ReadTables()
+        {
+            var tbs = _databaseReader.AllTables();
+            return tbs;
         }
 
     }

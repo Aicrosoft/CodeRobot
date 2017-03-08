@@ -28,6 +28,11 @@ namespace CS.CodeRobot.Generators
         /// </summary>
         public bool NoneAutoFile => AutoName.IsNullOrWhiteSpace();
 
+        /// <summary>
+        /// 获取含有子目录的名称
+        /// </summary>
+        /// <param name="nameOrAutoName"></param>
+        /// <returns></returns>
         public string GetSubName(string nameOrAutoName)
         {
             return string.IsNullOrWhiteSpace(Sub) ? nameOrAutoName : $"{Sub}\\{nameOrAutoName}";

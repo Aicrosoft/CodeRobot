@@ -1,4 +1,6 @@
-﻿using CS.CodeRobot.Generators;
+﻿using System;
+using CS.CodeRobot.Generators;
+using CS.CodeRobot.JsGenerators;
 
 namespace CS.CodeRobot
 {
@@ -15,8 +17,14 @@ namespace CS.CodeRobot
 
             //DotLiquidDemo.RunCMS();
 
-            Generator.Run(args);
+            //Generator.Run(args);
 
+            //JsSample.Run();
+
+            JsGenerator.Run(args);
+
+            Console.WriteLine(@"press any key to close.");
+            Console.ReadKey();
         }
     }
 }

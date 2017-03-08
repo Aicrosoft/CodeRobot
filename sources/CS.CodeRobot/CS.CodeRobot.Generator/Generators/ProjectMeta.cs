@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Xml.Serialization;
+using CS.CodeRobot.SchemaEngine;
+using CS.CodeRobot.TemplateEngine;
 using CS.Extension;
 using CS.Storage;
 using CS.Utils;
+using DatabaseSchemaReader.DataSchema;
 
 namespace CS.CodeRobot.Generators
 {
@@ -13,15 +17,13 @@ namespace CS.CodeRobot.Generators
     /// </summary>
     public class ProjectMeta
     {
-        
-
 
         public ProjectMeta()
         {
             DbConns = new List<DbSetting>();
         }
 
-      
+
         /// <summary>
         /// 当前项目关联的所有连接名称
         /// </summary>
@@ -82,7 +84,7 @@ namespace CS.CodeRobot.Generators
         public string GetTemplateDirectory(string modelLayer)
         {
             //return GetTemplateDirectory(modelLayer);
-            var rePath =  $"{TemplatesRootDirectory}{modelLayer}/";
+            var rePath = $"{TemplatesRootDirectory}{modelLayer}/";
             return FileHelper.GetFullPath(rePath);
         }
         /// <summary>
@@ -135,158 +137,6 @@ namespace CS.CodeRobot.Generators
         }
 
     }
-
-    //public enum ModelStyleType
-    //{
-    //    /// <summary>
-    //    /// Model层
-    //    /// </summary>
-    //    Model,
-
-    //    /// <summary>
-    //    /// Db访问层
-    //    /// </summary>
-    //    DbAccess,
-
-    //    /// <summary>
-    //    /// Db访问代理（缓存层）
-    //    /// </summary>
-    //    DbProxy,
-
-    //}
-
-    /// <summary>
-    /// 程序集配置
-    /// </summary>
-    //[Serializable]
-    public class AssemblySetting
-    {
-        public AssemblySetting(string modelLayer, ProjectMeta meta = null)
-        {
-            ModelLayer = modelLayer;
-            RootNamespace = meta?.Namespace ?? "CS";
-            RootAssemblyName = meta?.Namespace ?? "CS";
-            Guid = System.Guid.NewGuid().ToString();
-            AssemblyCompany = meta?.Company ?? "Chaso";
-            AssemblyCopyright = meta?.Copyright ?? "cszi.com";
-            var now = DateTime.Now;
-            Now = now;
-            //Year = now.Year.ToString();
-            AutoVersion = $"{now:yyyy}.{now:MMdd}.{now:HHmm}";
-        }
-        /// <summary>
-        /// 模型层类型
-        /// </summary>
-        public string ModelLayer { get; set; }
-
-        ///// <summary>
-        ///// 当前程序集名称
-        ///// <remarks>
-        ///// 如 CS.DataAccess. "Name"  中的 Name
-        ///// </remarks>
-        ///// </summary>
-        //[XmlIgnore]
-        //public string Name { get; set; }
-        /// <summary>
-        /// 名字空间全名
-        /// </summary>
-        [XmlIgnore]
-        public string NameSpace => $"{RootNamespace}.{ModelLayer}";
-
-        public string AssemblyName => $"{RootAssemblyName}.{ModelLayer}";
-        /// <summary>
-        /// 产品信息
-        /// </summary>
-        public string AssemblyProduct => $"{RootAssemblyName}.{ModelLayer}";
-
-        /// <summary>
-        /// 基础名字空间
-        /// </summary>
-        [XmlAttribute]
-        public string RootNamespace { get; set; }
-
-        /// <summary>
-        /// 基础程序集名
-        /// </summary>
-        [XmlAttribute]
-        public string RootAssemblyName { get; set; }
-
-        /// <summary>
-        /// 公司信息
-        /// </summary>
-        [XmlAttribute]
-        public string AssemblyCompany { get; set; }
-
-        /// <summary>
-        /// 版本信息
-        /// </summary>
-        [XmlAttribute]
-        public string AssemblyCopyright { get; set; }
-        /// <summary>
-        /// 商标
-        /// </summary>
-        [XmlAttribute]
-        public string AssemblyTrademark => "CSWare";
-
-        /// <summary>
-        /// GUID
-        /// </summary>
-        [XmlIgnore]
-        public string Guid { get; set; }
-        /// <summary>
-        /// 自动版本号
-        /// </summary>
-        [XmlIgnore]
-        public string AutoVersion { get; set; }
-
-        ///// <summary>
-        ///// 当前时间
-        ///// </summary>
-        //[XmlAttribute]
-        //public string Year { get; set; }
-
-        /// <summary>
-        /// 当前时间
-        /// </summary>
-        public DateTime Now { get; set; }
-
-    }
-
-    /// <summary>
-    /// 数据源配置
-    /// </summary>
-    [Serializable]
-    public class DbSetting
-    {
-        /// <summary>
-        /// 连接名称
-        /// </summary>
-        [XmlAttribute]
-        public string DbConnName { get; set; }
-        /// <summary>
-        /// 连接的库对应的名字空间名，目的是为了避免出现不同的库可能会有同名的表
-        /// <remarks>
-        /// 如 CS.Data.AccessLayer.{Name} 
-        /// </remarks>
-        /// </summary>
-        [XmlAttribute]
-        public string Name { get; set; }
-
-        private string _dbContextName;
-        /// <summary>
-        /// EF对应的DbContext名字
-        /// </summary>
-        [XmlAttribute]
-        public string DbContextName
-        {
-            get
-            {
-                return _dbContextName.IsNullOrWhiteSpace() ? $"{Name}DbContext" : _dbContextName;
-            }
-            set { _dbContextName = value; }
-        }
-
-
-    }
+   
 
 }

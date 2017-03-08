@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -7,6 +8,7 @@ using CS.CodeRobot.Generators;
 using CS.Extension;
 using CS.Logging;
 using CS.Utils;
+using DatabaseSchemaReader.DataSchema;
 using DotLiquid;
 
 namespace CS.CodeRobot.TemplateEngine
@@ -15,7 +17,7 @@ namespace CS.CodeRobot.TemplateEngine
     {
         static GeneratorFilter()
         {
-            TemplateApp = new TemplateApp();
+            //TemplateApp = new TemplateApp();
             CodeFiles = new List<CodeFile>();
         }
 
@@ -27,10 +29,11 @@ namespace CS.CodeRobot.TemplateEngine
         /// 当前项目信息
         /// </summary>
         public static ProjectMeta ProjectInfo { get; set; }
+
         /// <summary>
         /// 模板
         /// </summary>
-        public static TemplateApp TemplateApp { get; }
+        public static TemplateApp TemplateApp => Generator.TemplateApp;
 
         const string NameSpaceURI = "http://schemas.microsoft.com/developer/msbuild/2003";
 
@@ -43,27 +46,70 @@ namespace CS.CodeRobot.TemplateEngine
             log.Debug("清除所有的CodeFiles缓存信息");
         }
 
+        public static void RenderTable(string dsName,string tbName)
+        {
+            log.Debug($"{dsName} - {tbName}");
+        }
+
         /// <summary>
         /// 是否为根目下的文件
         /// </summary>
         /// <param name="sub"></param>
         /// <param name="templateFile"></param>
-        /// <param name="folderName"></param>
-        public static void Render(string sub, string templateFile, string folderName = null)
+        /// <param name="clsName">模板对应的基本类名称，会自动加上.cs 或.Auto.cs</param>
+        /// <param name="hasAuto">是否包含自动模板</param>
+        /// <param name="dbSettingName"></param>
+        public static void Render(string sub, string templateFile, string clsName = null, bool hasAuto = false, string dbSettingName = null)
         {
             var pi = ProjectInfo;
-            var ai = new AssemblySetting(sub, pi);//assemblyInfo
+            var ai = new ModelMeta(sub, pi);//assemblyInfo
 
             var absFile = $"{pi.GetTemplateDirectory(sub)}{templateFile}";
-            var className = $"{templateFile.Replace(".tpl","")}.cs";
-            var result = TemplateApp.Render(absFile, new { sub, pi });
-            var destFile = $"{pi.GetOutputDirectory(ai.ModelLayer,folderName)}{className}";
+            var className = clsName == null ? $"{templateFile.Replace(".tpl", "")}.cs" : $"{clsName}.cs";
+            var codeFile = new CodeFile { Name = className, Sub = dbSettingName };
+            var dbSetting = pi.DbConns.FirstOrDefault(x => x.Name == dbSettingName);
+            var result = TemplateApp.Render(absFile, new { sub,  pi, dbSetting });
+            var destFile = $"{pi.GetOutputDirectory(ai.Name, dbSettingName)}{className}";
             FileHelper.Save(destFile, result);
-            CodeFiles.Add(new CodeFile() {Name = className});
 
+            if (hasAuto)
+            {
+                codeFile.AutoName = codeFile.Name.Replace(".cs", ".Auto.cs");
+                var absAutoFile = absFile.Replace(".tpl", ".Auto.tpl");
+                result = TemplateApp.Render(absAutoFile, new { sub, pi, dbSetting });
+                destFile = $"{pi.GetOutputDirectory(ai.Name, dbSettingName)}{codeFile.AutoName}";
+                FileHelper.Save(destFile, result);
+            }
 
+            CodeFiles.Add(codeFile);
+        }
+
+        public static void Debug(DatabaseTableDrop o)
+        {
+            log.Debug(o.Table.Name);
+        }
+
+        /// <summary>
+        /// 根据表来生成的自动项
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <param name="dbSettingName"></param>
+        /// <param name="tableName"></param>
+        public static void RenderTableItem(string sub, string dbSettingName,string tableName)
+        {
+            //var pi = ProjectInfo;
+            //var ai = new ModelMeta(sub, pi);//assemblyInfo
+            //var tplFile = $"{pi.GetTemplateDirectory(sub)}Item.tpl";
+            //var tplAutoFile = tplFile.Replace(".tpl", ".Auto.tpl");
+            //var codeFile = new CodeFile { Name = $"{tableName}.cs", AutoName = $"{tableName}.Auto.cs", Sub = dbSettingName };
+            //var dbSetting = pi.DbConns.FirstOrDefault(x => x.Name == dbSettingName);
+            //if(dbSetting == null) throw new OperationCanceledException($"{dbSettingName} 异常");
+            //var tbd = dbSetting.Tables.FirstOrDefault(x => x.Table.Name == tableName);
+            //var result = TemplateApp.Render(tplFile, new { sub, pi, dbSetting, tbd });
+            //log.Debug(result);
           
         }
+
 
         /// <summary>
         /// 更新工程项目配置文件
@@ -87,67 +133,7 @@ namespace CS.CodeRobot.TemplateEngine
         }
 
 
-        /// <summary>
-        /// 生成项目文件
-        /// </summary>
-        /// <param name="sub"></param>
-        public static void Projetcs(string sub)
-        {
-            var pi = ProjectInfo;
-            //var xx = pi.GetTemplateDirectory(sub);
-            var configFile = Directory.GetFiles($"{pi.GetTemplateDirectory(sub)}").FirstOrDefault(x => FileHelper.GetExtension(x) == ".csproj");
-            if (string.IsNullOrWhiteSpace(configFile))
-            {
-                log.Error($"{sub}项目下的project.csproj文件模板丢失，请更正后重新执行生成功作。");
-                return;
-            }
-            var proFile = $"{pi.GetOutputDirectory(sub)}{pi.GetAssemblyName(sub)}.csproj";
-            FileHelper.Copy(configFile, proFile);
-            var msg = $"{proFile} 项目文件生成成功";
-            log.Info(msg);
-        }
-
-
-        /// <summary>
-        /// 将所有的config文件拷至项目目录
-        /// </summary>
-        /// <param name="sub"></param>
-        /// <returns></returns>
-        public static void Configs(string sub)
-        {
-            var pi = ProjectInfo;
-            //var xx = pi.GetTemplateDirectory(sub);
-            var configFiles = Directory.GetFiles($"{pi.GetTemplateDirectory(sub)}").Where(x => FileHelper.GetExtension(x) == ".config").ToArray();
-            if (configFiles.Length == 0)
-            {
-                log.Info("无config文件以生成"); 
-                return;
-            }
-            FileHelper.Copy(configFiles, pi.GetOutputDirectory(sub));
-            var msg = $"{sub} 下的 {string.Join(",",FileHelper.GetFileNames(configFiles))} 程序集的config生成成功";
-            log.Info(msg);
-            //return msg;
-        }
-
-        /// <summary>
-        /// 生成程序集信息
-        /// </summary>
-        /// <param name="sub"></param>
-        public static void Assembly(string sub)
-        {
-            var pi = ProjectInfo;
-            var ai = new AssemblySetting(sub, pi);//assemblyInfo
-            var fileName = $"{pi.TemplatesRootDirectory}AssemblyInfo.tpl";
-            var result = TemplateApp.Render(fileName, new { pi, ai });
-            //log.Debug(result);
-
-            var asFile = $"{pi.GetOutputDirectory(ai.ModelLayer)}Properties\\AssemblyInfo.cs";
-            FileHelper.Save(asFile, result);
-            var msg = $"{sub} 程序集信息写入完成";
-            log.Info(msg);
-            //return msg;
-        }
-
+        
         /// <summary>
         /// 写的时候必须小写？
         /// </summary>
@@ -160,6 +146,15 @@ namespace CS.CodeRobot.TemplateEngine
             if (length >= 0)
                 return value.Substring(startIndex, length);
             return value.Substring(startIndex);
+        }
+
+        /// <summary>
+        /// 输出显示消息
+        /// </summary>
+        /// <param name="msg"></param>
+        public static void Out(string msg)
+        {
+            log.Warn(msg);
         }
     }
 }

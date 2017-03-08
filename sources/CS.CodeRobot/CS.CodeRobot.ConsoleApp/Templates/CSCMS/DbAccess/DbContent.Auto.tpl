@@ -1,24 +1,16 @@
-﻿@using CS.eRobot.Generator
-@using SchemaExplorer
-@{
-	var p = @Model.Project;
-	var tbs = @Model.Tables;
-	var style = @Model.Style;
-	var dbSetting = @Model.DbSetting;
-}
-using System.Data.Entity;
-using @CodeHelper.GetNamespace(p,ModelStyleType.Model,dbSetting);
+﻿using System.Data.Entity;
+using {{pi.Namespace}}.Model.{{dbSetting.Name}};
 
 //-------------------------------------------------------------------------------------------
 // 以下代码为自动生成，请勿修改。
-// autogeneration @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") powered by atwind@cszi.com 
+// autogeneration {{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}} powered by atwind@cszi.com 
 //-------------------------------------------------------------------------------------------
 
 
-namespace @CodeHelper.GetNamespace(p,style,dbSetting)
+namespace {{pi.Namespace}}.{{sub}}.{{dbSetting.Name}}
 {
 
-    partial class @dbSetting.DbContextName : DbContext
+    partial class {{dbSetting.DbContextName}} : DbContext
     {
 
         @CodeHelper.GetEfMapTables(tbs)

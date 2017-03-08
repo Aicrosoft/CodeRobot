@@ -1,19 +1,10 @@
-﻿@using CS.eRobot.Generator
-@using SchemaExplorer
-@{
-	var p = @Model.Project;
-	var tbs = @Model.Tables;
-	var style = @Model.Style;
-	var dbSetting = @Model.DbSetting;
-    var ctor = string.Format("{0}()",@dbSetting.DbContentName);
-}
-using System.Data.Entity;
+﻿using System.Data.Entity;
 
-namespace  {{sub | namespace}} Namespace(p,style,dbSetting)
+namespace {{pi.Namespace}}.{{sub}}.{{dbSetting.Name}}
 {
-    internal partial class @dbSetting.DbContentName
+    internal partial class {{dbSetting.DbContextName}}
     {
-        public @ctor : base(DbConfigHelper.GetDbConnection("@dbSetting.DbConnName"), true)
+        public {{dbSetting.DbContextName}}() : base(DbConfigHelper.GetDbConnection("{{dbSetting.DbConnName}}"), true)
         {
         }
 

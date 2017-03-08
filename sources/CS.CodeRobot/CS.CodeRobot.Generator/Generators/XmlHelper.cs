@@ -15,9 +15,6 @@ namespace CS.CodeRobot.Generators
         /// <param name="codes"></param>
         public static void ChangeAutoItems(this XmlDocument xmlDoc, XmlNamespaceManager xnsm, List<CodeFile> codes )
         {
-            //var suffix = "";
-            //if (model == ModelStyleType.DbAccess) suffix = "Dao";
-            //if (model == ModelStyleType.DbProxy) suffix = "Proxy";
 
             var root = xmlDoc.DocumentElement;
             var node = root?.SelectSingleNode("/ns:Project/ns:ItemGroup/ns:Compile[@Include='Properties\\AssemblyInfo.cs']/..", xnsm);
@@ -52,10 +49,10 @@ namespace CS.CodeRobot.Generators
                         var autoClassNode = xmlDoc.CreateElement("Compile", node.NamespaceURI);
                         autoClassNode.SetAttribute("Include", autoClass);
                         var uponNode = xmlDoc.CreateElement("DependentUpon", node.NamespaceURI);
-                        uponNode.InnerText = $"{code.AutoName}";
+                        uponNode.InnerText = $"{code.Name}";
                         autoClassNode.AppendChild(uponNode);
                         var classNode = xmlDoc.CreateElement("Compile", node.NamespaceURI);
-                        classNode.SetAttribute("Include", autoClass);
+                        classNode.SetAttribute("Include",code.GetSubName(code.Name));
 
                         node.AppendChild(autoClassNode);
                         node.AppendChild(classNode);

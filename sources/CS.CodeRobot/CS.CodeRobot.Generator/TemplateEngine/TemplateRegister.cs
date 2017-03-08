@@ -1,5 +1,6 @@
 ﻿using System;
 using CS.CodeRobot.Generators;
+using DatabaseSchemaReader.DataSchema;
 using DotLiquid;
 
 namespace CS.CodeRobot.TemplateEngine
@@ -28,9 +29,11 @@ namespace CS.CodeRobot.TemplateEngine
             //Template.RegisterSafeType(typeof(DbSetting), Hash.FromAnonymousObject);
             //Template.RegisterSafeType(typeof(DateTime), Hash.FromAnonymousObject);
             RegisterTypes(new[] {
-                typeof(AssemblySetting),
+                typeof(ModelMeta),
                 typeof(DbSetting),
                 typeof(ProjectMeta),
+                typeof(DatabaseTable),
+                //typeof(NamedSchemaObject),
                 //typeof(DateTime),
 
             });
