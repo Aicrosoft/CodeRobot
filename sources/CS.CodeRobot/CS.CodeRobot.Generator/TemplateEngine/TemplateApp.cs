@@ -57,6 +57,15 @@ namespace CS.CodeRobot.TemplateEngine
             return result;
         }
 
+        public string Render<T>(string relFile,T obj)
+        {
+            var pms = Hash.FromAnonymousObject(obj);
+            var template = GeTemplate(relFile);
+            var result = template.Render(pms);
+            return result;
+        }
+
+
 
     }
 }

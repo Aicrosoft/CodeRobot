@@ -65,10 +65,10 @@
     <None Include="Templates\CSCMS\DbAccess\DbConfigHelper.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\CSCMS\DbAccess\DbContent.Auto.tpl">
+    <None Include="Templates\CSCMS\DbAccess\DbContext.Auto.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\CSCMS\DbAccess\DbContent.tpl">
+    <None Include="Templates\CSCMS\DbAccess\DbContext.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Templates\CSCMS\DbAccess\index.tpl">
@@ -83,9 +83,6 @@
     <None Include="Templates\CSCMS\DbProxy\packages.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\CSCMS\Model\index.tpl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Templates\CSCMS\Model\Item.Auto.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -95,13 +92,22 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Templates\CSCMS\DbAccess\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\CSCMS\DbAccess\project.csproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\CSCMS\DbProxy\index.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\CSCMS\DbProxy\project.csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\CSCMS\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\CSCMS\Model\index.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\CSCMS\Model\project.csproj">
@@ -113,6 +119,10 @@
     <Content Include="robot_128px.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\JNTemplate\src\JinianNet.JNTemplate\JinianNet.JNTemplate.csproj">
+      <Project>{3e78fb09-8f3c-4ec8-9f0a-626ec58f33ba}</Project>
+      <Name>JinianNet.JNTemplate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CS.CodeRobot.Generator\CS.CodeRobot.Generator.csproj">
       <Project>{e13bce09-4324-472c-9020-b208bfbaf6f3}</Project>
       <Name>CS.CodeRobot.Generator</Name>

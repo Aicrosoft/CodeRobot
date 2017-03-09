@@ -59,30 +59,6 @@ namespace CS.CodeRobot.Generators
             }
         }
 
-        //private DatabaseTableDrop[] _tbs;
-
-        ///// <summary>
-        ///// 数据库Schema信息
-        ///// </summary>
-        //[XmlIgnore]
-        //public DatabaseTableDrop[] Tables
-        //{
-        //    get
-        //    {
-        //        if (_tbs != null) return _tbs;
-        //        var dbApp = new DataSchemaApp(DbConnName);
-        //        var tbs = dbApp.ReadTables();
-        //        _tbs = tbs.Select(tb => new DatabaseTableDrop(tb)).ToArray();
-        //        return _tbs;
-        //    }
-        //}
-
-        //[XmlIgnore]
-        //public string[] TableNames
-        //{
-        //    get { return Tables.Select(x => x.Table.Name).ToArray(); }
-        //}
-
 
     }
 }

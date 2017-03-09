@@ -10,7 +10,7 @@ namespace CS.CodeRobot.JsGenerators
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(JsGenerator));
 
-        private static  App app ;
+        private static App _app;
 
         public static void Run(string[] args)
         {
@@ -19,20 +19,27 @@ namespace CS.CodeRobot.JsGenerators
                 Console.WriteLine(@"请输入项目模板的文件夹名称。");
                 Console.ReadLine();
             }
-            app = new App(args[0]);
-            var indexJs = $"{app.RootTemplateFullPath}index.js";
-            RunJs(indexJs);
+            _app = new App(args[0]);
 
-            foreach (var model in app.Models)
+            var jsFile = $"{_app.RootTemplateFullPath}index.js";
+            var jsObj = CreateJsInstance(jsFile);
+            jsObj.main(_app);
+
+            foreach (var model in _app.Models)
             {
-                var js = $"{app.RootTemplateFullPath}{model}\\index.js";
-                //RunJs(js);
+                jsFile = $"{_app.RootTemplateFullPath}{model.Name}\\index.js";
+                jsObj = CreateJsInstance(jsFile);
+                jsObj.main(_app, model);
             }
         }
 
+
+
+        #region CreateJsInstance   by JsCompiler 
+
         private static readonly JScriptCodeProvider JsCompiler = new JScriptCodeProvider();
 
-        public static void RunJs(string filePath)
+        public static dynamic CreateJsInstance(string jsFilePath, string jsClassName = "JsProgram")
         {
             var opt = new CompilerParameters
             {
@@ -42,23 +49,24 @@ namespace CS.CodeRobot.JsGenerators
             //opt.ReferencedAssemblies.Add("System.dll");
             opt.ReferencedAssemblies.Add("CS.Utility.dll");
             opt.ReferencedAssemblies.Add("CS.CodeRobot.Generator.dll");
-            var content = File.ReadAllText(filePath);
+            var content = File.ReadAllText(jsFilePath);
             var result = JsCompiler.CompileAssemblyFromSource(opt, content);
             if (result.Errors.Count > 0)
             {
                 log.Error($"[Compile Error:{result.Errors.Count}]");
                 foreach (var error in result.Errors)
-                {
                     log.Error(error);
-                }
-                return;
+
+                return null;
             }
             var js = result.CompiledAssembly;
-            dynamic instace = js.CreateInstance("JsProgram");
-            //Action<string> x = DebugConsole.Error;
-            Action<string> print = log.Debug;	 
-            instace.main(app);
+            dynamic instace = js.CreateInstance(jsClassName);
+            return instace;
         }
+
+        #endregion
+
+
 
     }
 }

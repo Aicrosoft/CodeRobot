@@ -61,77 +61,34 @@ namespace CS.CodeRobot.TemplateEngine
         /// <param name="dbSettingName"></param>
         public static void Render(string sub, string templateFile, string clsName = null, bool hasAuto = false, string dbSettingName = null)
         {
-            var pi = ProjectInfo;
-            var ai = new ModelMeta(sub, pi);//assemblyInfo
-
-            var absFile = $"{pi.GetTemplateDirectory(sub)}{templateFile}";
-            var className = clsName == null ? $"{templateFile.Replace(".tpl", "")}.cs" : $"{clsName}.cs";
-            var codeFile = new CodeFile { Name = className, Sub = dbSettingName };
-            var dbSetting = pi.DbConns.FirstOrDefault(x => x.Name == dbSettingName);
-            var result = TemplateApp.Render(absFile, new { sub,  pi, dbSetting });
-            var destFile = $"{pi.GetOutputDirectory(ai.Name, dbSettingName)}{className}";
-            FileHelper.Save(destFile, result);
-
-            if (hasAuto)
-            {
-                codeFile.AutoName = codeFile.Name.Replace(".cs", ".Auto.cs");
-                var absAutoFile = absFile.Replace(".tpl", ".Auto.tpl");
-                result = TemplateApp.Render(absAutoFile, new { sub, pi, dbSetting });
-                destFile = $"{pi.GetOutputDirectory(ai.Name, dbSettingName)}{codeFile.AutoName}";
-                FileHelper.Save(destFile, result);
-            }
-
-            CodeFiles.Add(codeFile);
-        }
-
-        public static void Debug(DatabaseTableDrop o)
-        {
-            log.Debug(o.Table.Name);
-        }
-
-        /// <summary>
-        /// 根据表来生成的自动项
-        /// </summary>
-        /// <param name="sub"></param>
-        /// <param name="dbSettingName"></param>
-        /// <param name="tableName"></param>
-        public static void RenderTableItem(string sub, string dbSettingName,string tableName)
-        {
             //var pi = ProjectInfo;
             //var ai = new ModelMeta(sub, pi);//assemblyInfo
-            //var tplFile = $"{pi.GetTemplateDirectory(sub)}Item.tpl";
-            //var tplAutoFile = tplFile.Replace(".tpl", ".Auto.tpl");
-            //var codeFile = new CodeFile { Name = $"{tableName}.cs", AutoName = $"{tableName}.Auto.cs", Sub = dbSettingName };
+
+            //var absFile = $"{pi.GetTemplateDirectory(sub)}{templateFile}";
+            //var className = clsName == null ? $"{templateFile.Replace(".tpl", "")}.cs" : $"{clsName}.cs";
+            //var codeFile = new CodeFile { Name = className, Sub = dbSettingName };
             //var dbSetting = pi.DbConns.FirstOrDefault(x => x.Name == dbSettingName);
-            //if(dbSetting == null) throw new OperationCanceledException($"{dbSettingName} 异常");
-            //var tbd = dbSetting.Tables.FirstOrDefault(x => x.Table.Name == tableName);
-            //var result = TemplateApp.Render(tplFile, new { sub, pi, dbSetting, tbd });
-            //log.Debug(result);
-          
+            //var result = TemplateApp.Render(absFile, new { sub,  pi, dbSetting });
+            //var destFile = $"{pi.GetOutputDirectory(ai.Name, dbSettingName)}{className}";
+            //FileHelper.Save(destFile, result);
+
+            //if (hasAuto)
+            //{
+            //    codeFile.AutoName = codeFile.Name.Replace(".cs", ".Auto.cs");
+            //    var absAutoFile = absFile.Replace(".tpl", ".Auto.tpl");
+            //    result = TemplateApp.Render(absAutoFile, new { sub, pi, dbSetting });
+            //    destFile = $"{pi.GetOutputDirectory(ai.Name, dbSettingName)}{codeFile.AutoName}";
+            //    FileHelper.Save(destFile, result);
+            //}
+
+            //CodeFiles.Add(codeFile);
         }
 
-
-        /// <summary>
-        /// 更新工程项目配置文件
-        /// </summary>
-        /// <param name="sub"></param>
-        public static void UpdateProject(string sub)
+        public static void Debug(DatabaseTable o)
         {
-            var pi = ProjectInfo;
-            var xmlDoc = new XmlDocument();
-            //var ai = new AssemblySetting(sub, pi);//assemblyInfo
-            var projectXml = $"{pi.GetOutputDirectory(sub)}{pi.GetAssemblyName(sub)}.csproj";
-            xmlDoc.Load(projectXml);
-            var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
-            nsmgr.AddNamespace("ns", NameSpaceURI);
-            var assName = pi.GetAssemblyName(sub);
-            xmlDoc.ChangeProjectInfo(assName, nsmgr);
-
-            xmlDoc.ChangeAutoItems(nsmgr, CodeFiles);
-            xmlDoc.Save(projectXml);
-            log.Info($"{sub} 的project.csproj 工程文件更新完毕");
+            var x = o.Name;
+            log.Error(x);
         }
-
 
         
         /// <summary>
@@ -147,14 +104,6 @@ namespace CS.CodeRobot.TemplateEngine
                 return value.Substring(startIndex, length);
             return value.Substring(startIndex);
         }
-
-        /// <summary>
-        /// 输出显示消息
-        /// </summary>
-        /// <param name="msg"></param>
-        public static void Out(string msg)
-        {
-            log.Warn(msg);
-        }
+        
     }
 }

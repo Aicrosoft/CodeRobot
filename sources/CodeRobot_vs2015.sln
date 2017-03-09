@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseSchemaReader", "..\
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DotLiquid", "..\..\DotLiquid\src\DotLiquid\DotLiquid.xproj", "{744C2B4B-5067-4E98-89A2-1586F49B23D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JinianNet.JNTemplate.Test", "..\..\JNTemplate\src\JinianNet.JNTemplate.Test\JinianNet.JNTemplate.Test.csproj", "{7F607362-0680-4751-B1DC-621219294AE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JinianNet.JNTemplate", "..\..\JNTemplate\src\JinianNet.JNTemplate\JinianNet.JNTemplate.csproj", "{3E78FB09-8F3C-4EC8-9F0A-626EC58F33BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{744C2B4B-5067-4E98-89A2-1586F49B23D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{744C2B4B-5067-4E98-89A2-1586F49B23D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{744C2B4B-5067-4E98-89A2-1586F49B23D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F607362-0680-4751-B1DC-621219294AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F607362-0680-4751-B1DC-621219294AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F607362-0680-4751-B1DC-621219294AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F607362-0680-4751-B1DC-621219294AE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E78FB09-8F3C-4EC8-9F0A-626EC58F33BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E78FB09-8F3C-4EC8-9F0A-626EC58F33BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E78FB09-8F3C-4EC8-9F0A-626EC58F33BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E78FB09-8F3C-4EC8-9F0A-626EC58F33BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,5 +83,7 @@ Global
 		{881AAA81-B882-45A6-A305-AE0E83ADD0D4} = {BB3D29CD-ED0E-4801-B3CB-F2AC30737E0D}
 		{AA652F8E-0B96-484C-A146-C4183E4A0A25} = {5C1AF8FE-1778-4EA7-AB96-A1BC20D145EE}
 		{744C2B4B-5067-4E98-89A2-1586F49B23D0} = {5C1AF8FE-1778-4EA7-AB96-A1BC20D145EE}
+		{7F607362-0680-4751-B1DC-621219294AE3} = {5C1AF8FE-1778-4EA7-AB96-A1BC20D145EE}
+		{3E78FB09-8F3C-4EC8-9F0A-626EC58F33BA} = {5C1AF8FE-1778-4EA7-AB96-A1BC20D145EE}
 	EndGlobalSection
 EndGlobal

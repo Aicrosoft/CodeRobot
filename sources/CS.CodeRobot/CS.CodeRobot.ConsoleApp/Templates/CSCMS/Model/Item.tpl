@@ -1,23 +1,32 @@
-﻿@using CS.eRobot.Generator
-@using SchemaExplorer
-@{
-	var p = @Model.Project;
-	var tb = @Model.Table;
-	var style = @Model.Style;
-	var dbSetting = @Model.DbSetting;
-}
-namespace @CodeHelper.GetNamespace(p,style,dbSetting)
+﻿namespace ${model.NameSpace}.${dbSetting.Name}
 {
 
-{{ tbd | debug }}
-    /// <summary>
-    /// @tb.Description
-    /// createtime : @DateTime.Now.ToString()
+	/// <summary>
+    /// ${table.Name}-${table.Description}
+    /// <remarks>
+    /// 
+    /// </remarks>
+    /// createtime : ${model.Now.ToString("yyyy-MM-dd HH:mm:ss") }
     /// </summary>
-    public partial class {{ tbd.Table.Name }}
+    public partial class ${table.Name}
     {
-        @CodeHelper.GetModelProperties(tb)
+        
+		$foreach(column in table.Columns)
+		$if(!helper.IsNotEnumType(column))
+		/// <summary>
+        /// $column.Description
+        /// </summary>
+        public virtual $helper.ToDotNetType(column) $column.Name { get; set; } $end
+				
+		$end
+		
+		
+		
+		
     }
-
-    @CodeHelper.CreateEnumTypes(tb)
+	
+	
+	$helper.CreateEnumTypes(table)
+	
+    
 }

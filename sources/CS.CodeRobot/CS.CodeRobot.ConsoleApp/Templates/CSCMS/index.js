@@ -6,8 +6,10 @@ class JsProgram {
     var log:ILog = LogManager.GetLogger();
 
     function main(app) {
+		
         //log.Error("hellow");
         for (var model in app.Models) {
+			
             log.Info("开始生成["+ model.Name +"]的Assembly.cs");
             //log.Debug(model);
 			Generator.CreateAssembly(model);

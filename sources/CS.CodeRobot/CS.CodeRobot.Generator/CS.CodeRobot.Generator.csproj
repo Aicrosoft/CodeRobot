@@ -35,6 +35,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.JScript" />
+    <Reference Include="Scriban, Version=0.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Scriban.0.2.2\lib\net35\Scriban.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -47,15 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="DataSchemaDemo.cs" />
-    <Compile Include="DotLiquidDemo.cs" />
     <Compile Include="Generators\CodeFile.cs" />
+    <Compile Include="Generators\MySqlDatabaseHelper.cs" />
     <Compile Include="Generators\DbSetting.cs" />
     <Compile Include="Generators\ModelMeta.cs" />
-    <Compile Include="JsDemo.cs" />
     <Compile Include="JsGenerators\JsGenerator.cs" />
-    <Compile Include="JsSample.cs" />
     <Compile Include="TemplateEngine\DatabaseTableDrop.cs" />
+    <Compile Include="JnTemplateEngine\JnTemplateApp.cs" />
     <Compile Include="TemplateEngine\TemaplteFilter.cs" />
     <Compile Include="Generators\Generator.cs" />
     <Compile Include="Generators\ProjectMeta.cs" />
@@ -86,8 +88,14 @@
       <Project>{aa652f8e-0b96-484c-a146-c4183e4a0a25}</Project>
       <Name>DatabaseSchemaReader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\JNTemplate\src\JinianNet.JNTemplate\JinianNet.JNTemplate.csproj">
+      <Project>{3e78fb09-8f3c-4ec8-9f0a-626ec58f33ba}</Project>
+      <Name>JinianNet.JNTemplate</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Demos\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

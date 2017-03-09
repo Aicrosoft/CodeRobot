@@ -19,7 +19,6 @@ namespace CS.CodeRobot.Generators
             AssemblyCompany = meta?.Company ?? "Chaso";
             AssemblyCopyright = meta?.Copyright ?? "cszi.com";
             var now = DateTime.Now;
-            Now = now;
             //Year = now.Year.ToString();
             AutoVersion = $"{now:yyyy}.{now:MMdd}.{now:HHmm}";
         }
@@ -29,21 +28,21 @@ namespace CS.CodeRobot.Generators
         /// 模型层类型(即SubName)
         /// </summary>
         public string Name { get; set; }
-
-        ///// <summary>
-        ///// 当前程序集名称
-        ///// <remarks>
-        ///// 如 CS.DataAccess. "Name"  中的 Name
-        ///// </remarks>
-        ///// </summary>
-        //[XmlIgnore]
-        //public string Name { get; set; }
         /// <summary>
-        /// 名字空间全名
+        /// 后缀，对于Table生成的表来说，不同的层有不同的后缀后称
+        /// </summary>
+        [XmlIgnore]
+        public string Suffix { get; private set; }
+
+        /// <summary>
+        /// 名字空间全名(项目名字空间+当前Model名字空间)
         /// </summary>
         [XmlIgnore]
         public string NameSpace => $"{RootNamespace}.{Name}";
 
+        /// <summary>
+        /// 程序集名称
+        /// </summary>
         public string AssemblyName => $"{RootAssemblyName}.{Name}";
         /// <summary>
         /// 产品信息
@@ -90,16 +89,16 @@ namespace CS.CodeRobot.Generators
         [XmlIgnore]
         public string AutoVersion { get; set; }
 
-        ///// <summary>
-        ///// 当前时间
-        ///// </summary>
-        //[XmlAttribute]
-        //public string Year { get; set; }
-
         /// <summary>
         /// 当前时间
         /// </summary>
-        public DateTime Now { get; set; }
+        [XmlIgnore]
+        public DateTime Now =>DateTime.Now;
+
+        public void SetSuffix(string suffix)
+        {
+            Suffix = suffix;
+        }
 
     }
 }

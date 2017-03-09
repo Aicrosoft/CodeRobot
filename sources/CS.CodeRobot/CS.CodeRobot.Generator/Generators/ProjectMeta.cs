@@ -36,6 +36,7 @@ namespace CS.CodeRobot.Generators
         [XmlIgnore]
         public string TemplatesRootDirectory { get; set; }
 
+        
 
         /// <summary>
         /// 输出根目录
@@ -49,9 +50,9 @@ namespace CS.CodeRobot.Generators
 
 
         /// <summary>
-        /// 名字空间
+        /// 项目的名字空间
         /// <remarks>
-        /// 将和不同模型名称组成完整的namespace和程序集名称
+        /// 所有的子模板将以该名字空间为基础，如 CS.CMS .XXX
         /// </remarks>
         /// </summary>
         public string Namespace { get; set; }
@@ -69,44 +70,47 @@ namespace CS.CodeRobot.Generators
         #region 便捷属性 
 
 
-
-
-        public string GetAssemblyName(string modelLayer)
-        {
-            return $"{Namespace}.{modelLayer}";
-        }
-
         /// <summary>
         /// 返回指定模型层模板所在的根目录
         /// </summary>
-        /// <param name="modelLayer"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
-        public string GetTemplateDirectory(string modelLayer)
+        public string GetTemplateDirectory(ModelMeta model)
         {
-            //return GetTemplateDirectory(modelLayer);
-            var rePath = $"{TemplatesRootDirectory}{modelLayer}/";
+            var rePath = $"{TemplatesRootDirectory}{model.Name}/";
             return FileHelper.GetFullPath(rePath);
         }
+
+        /// <summary>
+        /// 获取某一目录下的相对路径文件的全路径
+        /// </summary>
+        /// <param name="relFileName"></param>
+        /// <returns></returns>
+        public string GetTemplateFullPath(string relFileName)
+        {
+            return FileHelper.GetFullPath($"{TemplatesRootDirectory}{relFileName}");
+        }
+
         /// <summary>
         /// 返回指定模型层的输出根目录
         /// </summary>
-        /// <param name="modelLayer"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
-        public string GetOutputDirectory(string modelLayer)
+        public string GetOutputDirectory(ModelMeta model)
         {
             //return GetOutputDirectory(modelLayer);
-            return $"{OutputRootDirectory}{Namespace}.Respository\\{Namespace}.{modelLayer}\\";
+            return $"{OutputRootDirectory}{Namespace}.Respository\\{model.AssemblyName}\\";
         }
 
         /// <summary>
         /// 返回子目录（如果存在的话）
         /// </summary>
-        /// <param name="modelLayer"></param>
+        /// <param name="model"></param>
         /// <param name="subFolder"></param>
         /// <returns></returns>
-        public string GetOutputDirectory(string modelLayer, string subFolder)
+        public string GetOutputDirectory(ModelMeta model, string subFolder)
         {
-            var path = $"{GetOutputDirectory(modelLayer)}{subFolder}\\".Replace("\\\\", "\\");
+            var path = $"{GetOutputDirectory(model)}{subFolder}\\".Replace("\\\\", "\\");
             return path;
         }
 
