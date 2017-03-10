@@ -2,7 +2,7 @@
 using System.Data.Common;
 using MySql.Data.MySqlClient;
 
-namespace {{pi.Namespace}}.{{sub}}
+namespace ${model.Namespace}
 {
     public class DbConfigHelper
     {

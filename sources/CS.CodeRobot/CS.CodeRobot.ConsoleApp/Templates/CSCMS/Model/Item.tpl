@@ -2,26 +2,20 @@
 {
 
 	/// <summary>
-    /// ${table.Name}-${table.Description}
+    /// ${table.Name}
     /// <remarks>
-    /// 
+    /// ${table.Description}
     /// </remarks>
     /// createtime : ${model.Now.ToString("yyyy-MM-dd HH:mm:ss") }
     /// </summary>
     public partial class ${table.Name}
     {
         
-		$foreach(column in table.Columns)
-		$if(!helper.IsNotEnumType(column))
+		$foreach(column in table.Columns)   $if(helper.IsNotEnumType(column) != true)
 		/// <summary>
         /// $column.Description
         /// </summary>
-        public virtual $helper.ToDotNetType(column) $column.Name { get; set; } $end
-				
-		$end
-		
-		
-		
+        public virtual ${column.Table.Name}${column.Name}Type $column.Name { get; set; }    $end	$end
 		
     }
 	

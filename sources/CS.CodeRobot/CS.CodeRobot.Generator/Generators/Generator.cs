@@ -4,55 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using CS.CodeRobot.JnTemplateEngine;
-using CS.CodeRobot.TemplateEngine;
 using CS.Logging;
 using CS.Utils;
 using DatabaseSchemaReader.DataSchema;
-using DotLiquid;
 
 namespace CS.CodeRobot.Generators
 {
     public class Generator
     {
 
-
-        //public static void Run(string[] args)
-        //{
-        //    if (args.Length == 0)
-        //    {
-        //        Console.WriteLine(@"请输入项目模板的文件夹名称。");
-        //        Console.ReadLine();
-        //    }
-        //    var pfName = args[0];
-        //    var app = new App(pfName);
-        //    var pi = app.Project;
-        //    GeneratorFilter.ProjectInfo = pi;
-        //    var rootTemplateFolders = FileHelper.GetFullPath(pi.TemplatesRootDirectory);
-        //    var subs = FileHelper.GetSubFolderNames(rootTemplateFolders); //子模板目录
-        //    if (subs.Length == 0)
-        //    {
-        //        log.Warn("子模板不存在，无法生成项目。");
-        //        return;
-        //    }
-        //    var result = GeneratorFilter.TemplateApp.Render($"{rootTemplateFolders}index.tpl", new { subs, pi });
-        //    log.Debug(result);
-
-        //    //开始运行项目子模板
-        //    foreach (var sub in subs)
-        //    {
-        //        result = GeneratorFilter.TemplateApp.Render($"{rootTemplateFolders}{sub}\\index.tpl", new { sub, pi });
-        //        log.Debug(result);
-        //    }
-
-        //    //Console.WriteLine(@"press any key to close.");
-        //    //Console.ReadKey();
-        //}
-
-
-
         static Generator()
         {
-            TemplateApp = new TemplateApp();
             CodeFiles = new List<CodeFile>();
         }
 
@@ -60,32 +22,52 @@ namespace CS.CodeRobot.Generators
         private static readonly ILog log = LogManager.GetLogger(typeof(Generator));
         private static readonly List<CodeFile> CodeFiles;//所有的生成的实体类及其所在文件夹的信息
 
-        /// <summary>
-        /// 模板
-        /// </summary>
-        public static TemplateApp TemplateApp { get; }
 
+        public static void RenderDbContext(string tplFile, ModelMeta model, DbSetting dbSetting)
+        {
+            var codeFile = new CodeFile { Name = $"{dbSetting.DbContextName}.cs", Sub = dbSetting.Name, AutoName = $"{dbSetting.DbContextName}.Auto.cs" };
+            RenderAutoItem(tplFile, model, dbSetting, codeFile);
+        }
 
+        public static void RenderTable(string tplFile, ModelMeta model, DbSetting dbSetting, DatabaseTable table)
+        {
+            var codeFile = new CodeFile { Name = $"{table.Name}{model.Suffix}.cs", Sub = dbSetting.Name, AutoName = $"{table.Name}{model.Suffix}.Auto.cs" };
+            RenderAutoItem(tplFile, model, dbSetting, codeFile, table);
+        }
 
-        public static void RenderTable(string tplFile, DatabaseTable table, ModelMeta model, DbSetting dbSetting)
+        public static void Render(string tplFile, ModelMeta model)
         {
             var pi = App.Instance.Project;
-            var clsName = $"{table.Name}{model.Suffix}.cs";
-            var clsAutoName = $"{table.Name}{model.Suffix}.Auto.cs";
-            var codeFile = new CodeFile { Name = clsName, Sub = dbSetting.Name, AutoName = clsAutoName };
+            var codeFile = new CodeFile { Name = tplFile.Replace(".tpl", ".cs") };
+            var absTplFile = $"{pi.GetTemplateDirectory(model)}{tplFile}";
+            var clsAbsFile = $"{pi.GetOutputDirectory(model)}{codeFile.Name}";
+
+            //手动代码
+            var tpl = JnTemplateApp.CreateTemplate(absTplFile);
+            tpl.Set("pi", pi);
+            tpl.Set("model", model);
+            var clsCode = tpl.Render();
+            FileHelper.Save(clsAbsFile, clsCode, false);
+
+            CodeFiles.Add(codeFile);
+        }
+
+        private static void RenderAutoItem(string tplFile, ModelMeta model, DbSetting dbSetting, CodeFile codeFile, DatabaseTable table = null)
+        {
+            var pi = App.Instance.Project;
             var absTplFile = $"{pi.GetTemplateDirectory(model)}{tplFile}";
             var absTplAutoFile = $"{pi.GetTemplateDirectory(model)}{tplFile.Replace(".tpl", ".Auto.tpl")}";
-            var clsAbsFile = $"{pi.GetOutputDirectory(model, dbSetting.Name)}{clsName}";
-            var clsAbsAutoFile = $"{pi.GetOutputDirectory(model, dbSetting.Name)}{clsAutoName}";
+            var clsAbsFile = $"{pi.GetOutputDirectory(model, dbSetting.Name)}{codeFile.Name}";
+            var clsAbsAutoFile = $"{pi.GetOutputDirectory(model, dbSetting.Name)}{codeFile.AutoName}";
 
             //自动代码
             var tpl = JnTemplateApp.CreateTemplate(absTplAutoFile);
-            tpl.Set("pi",pi);
+            tpl.Set("pi", pi);
             tpl.Set("table", table);
-            tpl.Set("model",model);
-            tpl.Set("dbSetting",dbSetting);
+            tpl.Set("model", model);
+            tpl.Set("dbSetting", dbSetting);
             var clsAutoCode = tpl.Render();
-            FileHelper.Save(clsAbsAutoFile,clsAutoCode,true);
+            FileHelper.Save(clsAbsAutoFile, clsAutoCode, true);
 
             //手动代码
             tpl = JnTemplateApp.CreateTemplate(absTplFile);
@@ -94,8 +76,7 @@ namespace CS.CodeRobot.Generators
             tpl.Set("model", model);
             tpl.Set("dbSetting", dbSetting);
             var clsCode = tpl.Render();
-            FileHelper.Save(clsAbsFile, clsCode, true);
-
+            FileHelper.Save(clsAbsFile, clsCode, false);
 
             CodeFiles.Add(codeFile);
         }

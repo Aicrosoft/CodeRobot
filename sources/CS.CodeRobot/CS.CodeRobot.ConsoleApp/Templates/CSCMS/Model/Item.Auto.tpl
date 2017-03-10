@@ -14,14 +14,12 @@ namespace ${model.NameSpace}.${dbSetting.Name}
     partial class ${table.Name}
     {
 		
-        $foreach(column in table.Columns)
-		$if(helper.IsNotEnumType(column))
+        $foreach(column in table.Columns)  $if(helper.IsNotEnumType(column))
 		/// <summary>
         /// $column.Description
         /// </summary>
-        public virtual $helper.ToDotNetType(column) $column.Name { get; set; } $end
-				
-		$end
+        public virtual $helper.ToDotNetType(column) $column.Name { get; set; }
+		$end  $end
 		
 		
     }

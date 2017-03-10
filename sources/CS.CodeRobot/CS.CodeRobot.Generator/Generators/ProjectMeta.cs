@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Xml.Serialization;
-using CS.CodeRobot.SchemaEngine;
-using CS.CodeRobot.TemplateEngine;
 using CS.Extension;
-using CS.Storage;
 using CS.Utils;
-using DatabaseSchemaReader.DataSchema;
 
 namespace CS.CodeRobot.Generators
 {

@@ -95,7 +95,7 @@ namespace CS.CodeRobot.Generators
         [XmlIgnore]
         public DateTime Now =>DateTime.Now;
 
-        public void SetSuffix(string suffix)
+        internal void SetSuffix(string suffix)
         {
             Suffix = suffix;
         }

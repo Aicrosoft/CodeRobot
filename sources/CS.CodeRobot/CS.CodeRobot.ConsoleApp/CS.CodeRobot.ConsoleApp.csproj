@@ -71,13 +71,25 @@
     <None Include="Templates\CSCMS\DbAccess\DbContext.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\CSCMS\DbAccess\index.tpl">
+    <None Include="Templates\CSCMS\DbAccess\Item.Auto.tpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\CSCMS\DbAccess\Item.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Templates\CSCMS\DbAccess\packages.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\CSCMS\DbProxy\index.tpl">
+    <None Include="Templates\CSCMS\DbProxy\CacheManager.tpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\CSCMS\DbProxy\Item.Auto.tpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\CSCMS\DbProxy\Item.tpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\CSCMS\DbProxy\MemcachedManager.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Templates\CSCMS\DbProxy\packages.config">

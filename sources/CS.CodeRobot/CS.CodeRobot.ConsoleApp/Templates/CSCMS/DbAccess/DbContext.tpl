@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 
-namespace {{pi.Namespace}}.{{sub}}.{{dbSetting.Name}}
+namespace ${model.NameSpace}.${dbSetting.Name}
 {
-    internal partial class {{dbSetting.DbContextName}}
+    internal partial class ${dbSetting.DbContextName}
     {
-        public {{dbSetting.DbContextName}}() : base(DbConfigHelper.GetDbConnection("{{dbSetting.DbConnName}}"), true)
+        public ${dbSetting.DbContextName}() : base(DbConfigHelper.GetDbConnection("${dbSetting.DbConnName}"), true)
         {
         }
 

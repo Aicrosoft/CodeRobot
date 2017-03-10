@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CS.CodeRobot.Generators;
-using CS.CodeRobot.TemplateEngine;
 using CS.Logging;
 using CS.Storage;
 using CS.Utils;
@@ -40,7 +39,6 @@ namespace CS.CodeRobot
         public App()
         {
             Instance = this;
-            TemplateRegister.Init();
         }
 
         /// <summary>
@@ -68,7 +66,11 @@ namespace CS.CodeRobot
             }
         }
 
-
+        public void SetSuffix(string modelName, string suffix)
+        {
+            var item = Models.FirstOrDefault(x => x.Name == modelName);
+            item.SetSuffix(suffix);
+        }
 
 
 

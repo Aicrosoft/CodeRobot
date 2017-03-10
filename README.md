@@ -15,7 +15,7 @@ you can use it:
 join us please!
 
 If you want to learn more about creating good readme files then refer the following . You can also seek inspiration from the below readme files:
-- [DotLiquid](https://github.com/Famous-Projects/DotLiquid)
+- [JNTemplate](https://github.com/Famous-Projects/jntemplate)
 - [DatabaseSchemaReader](https://github.com/Famous-Projects/DatabaseSchemaReader)
 
 

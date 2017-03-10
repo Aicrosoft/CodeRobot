@@ -9,7 +9,6 @@ using CS.Extension;
 using CS.Logging;
 using CS.Utils;
 using DatabaseSchemaReader.DataSchema;
-using DotLiquid;
 
 namespace CS.CodeRobot.TemplateEngine
 {
@@ -22,8 +21,6 @@ namespace CS.CodeRobot.TemplateEngine
         }
 
         private static readonly ILog log = LogManager.GetLogger(typeof(GeneratorFilter));
-
-
 
         /// <summary>
         /// 当前项目信息

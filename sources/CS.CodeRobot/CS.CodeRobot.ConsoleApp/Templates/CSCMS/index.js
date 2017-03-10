@@ -21,7 +21,11 @@ class JsProgram {
 			Generator.CreateProjetc(model);
 
         }
-
+		
+		//设定不同Model的类后缀
+		app.SetSuffix("DbAccess","Dao");
+		app.SetSuffix("DbProxy","Proxy");
+		
     }
 
 }

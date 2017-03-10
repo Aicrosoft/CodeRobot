@@ -27,6 +27,7 @@ namespace CS.CodeRobot.JsGenerators
 
             foreach (var model in _app.Models)
             {
+                //if(model.Name != "DbProxy") continue;
                 jsFile = $"{_app.RootTemplateFullPath}{model.Name}\\index.js";
                 jsObj = CreateJsInstance(jsFile);
                 jsObj.main(_app, model);

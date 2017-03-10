@@ -7,7 +7,6 @@ class JsProgram {
 
     function main(app,model) {
 		
-		//model.SetSuffix("");
 		
         log.Info("初始化["+ model.Name +"]的项目文件集合CodeFiles");
 		Generator.InitCodeFiles();
@@ -16,15 +15,12 @@ class JsProgram {
         for (var dbSet in app.Project.DbConns) {
 			log.Debug("预计有："+ dbSet.Tables.Count + "个表要进行处理")
 			
-			//生成DbContext文件
-			//{{sub | render:"DbContext.tpl",ds.DbContextName,true,ds.Name}}
-			
 			
 			//开始处理表
 			for(var tb in dbSet.Tables){
-				log.Error(tb.Name);
+				//log.Error(tb.Name);
 				
-				Generator.RenderTable("Item.tpl",tb,model,dbSet);
+				Generator.RenderTable("Item.tpl",model,dbSet,tb);
 				
 			}
            

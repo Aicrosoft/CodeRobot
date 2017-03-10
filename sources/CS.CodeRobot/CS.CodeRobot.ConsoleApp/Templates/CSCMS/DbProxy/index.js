@@ -7,16 +7,32 @@ class JsProgram {
 
     function main(app,model) {
 		
-        log.Info("初始化["+ model.Name +"]的项目文件集合CodeFiles");
+		log.Info("初始化["+ model.Name +"]的项目文件集合CodeFiles");
 		Generator.InitCodeFiles();
-			
+		
+		log.Info("create CacheManager.cs")
+		Generator.Render("CacheManager.tpl",model);
+		
+		log.Info("create MemcachedManager.cs")
+		Generator.Render("MemcachedManager.tpl",model);
+		
 			
         for (var dbSet in app.Project.DbConns) {
+			log.Debug("预计有："+ dbSet.Tables.Count + "个表要进行处理")
 			
-			log.Error(dbSet.Tables.Count);
+			
+			//开始处理表
+			for(var tb in dbSet.Tables){
+				//log.Info(tb.Name);
+				
+				Generator.RenderTable("Item.tpl",model,dbSet,tb);
+				
+			}
            
-
         }
+		
+		log.Info("开始更新["+ model.Name +"]的项目的工程文件");
+		Generator.UpdateProject(model);
 
     }
 
