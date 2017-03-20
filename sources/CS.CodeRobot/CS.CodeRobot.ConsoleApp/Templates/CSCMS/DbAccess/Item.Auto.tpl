@@ -6,7 +6,7 @@ using System.Linq;
 using ${pi.Namespace}.Model.${dbSetting.Name};
 
 //-------------------------------------------------------------------------------------------
-// 以下代码为自动生成，请勿修改。
+// 以下代码为自动生成，请勿修改。 $val
 // autogeneration ${model.Now.ToString("yyyy-MM-dd HH:mm:ss") } powered by atwind@cszi.com 
 //-------------------------------------------------------------------------------------------
 
@@ -22,6 +22,22 @@ namespace ${model.NameSpace}.${dbSetting.Name}
     /// </summary>
     partial class $clsDao
     {
+
+
+		/// <summary>
+        /// 载入全部
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<${modelClassName}> LoadAll()
+        {
+            using (var db = new ${clsDbContext}())
+            {
+                return db.${modelClassName}.ToList();
+            }
+        }
+
+
+
         /// <summary>
         /// 主键获取
         /// </summary>
@@ -46,6 +62,40 @@ namespace ${model.NameSpace}.${dbSetting.Name}
             {
                 var item = db.${modelClassName}.FirstOrDefault(predicate);
                 return item;
+            }
+        }
+		
+		/// <summary>
+        /// 是否存在    
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public virtual bool Any(Func<$modelClassName, bool> predicate)
+        {
+            using (var db = new ${clsDbContext}())
+            {
+                var rst = db.${modelClassName}.Any(predicate);
+                return rst;
+            }
+        }
+		
+		/// <summary>
+        /// 默认倒序取得
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="descOrderByKey"></param>
+        /// <param name="take"></param>
+        /// <param name="ascOrder">默认倒序</param>
+        /// <returns></returns>
+        public virtual IEnumerable<$modelClassName> Get(Func<$modelClassName, bool> predicate, Func<$modelClassName, int> descOrderByKey, int take = 1, bool ascOrder = false)
+        {
+            using (var db = new ${clsDbContext}())
+            {
+                var items = ascOrder ?
+                    db.${modelClassName}.Where(predicate).OrderBy(descOrderByKey).Take(take)
+                    :
+                    db.${modelClassName}.Where(predicate).OrderByDescending(descOrderByKey).Take(take);
+                return items.ToArray();
             }
         }
 
@@ -182,7 +232,30 @@ namespace ${model.NameSpace}.${dbSetting.Name}
                 return val;
             }
         }
+		
+		$if(helper.HasOnePrimaryKey(table))
+		
+		/// <summary>
+        /// 一次删除多个
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+	    public virtual int Delete(IEnumerable<$helper.GetOnePkType(table)> ids)
+        {
+            using (var db = new ${clsDbContext}())
+            {
+                foreach (var item in ids.Select(id => db.${modelClassName}.Where(x => x.${helper.GetPkName(table)} == id)).SelectMany(items => items))
+                {
+                    db.${modelClassName}.Remove(item);
+                }
+                var val = db.SaveChanges();
+                return val;
+            }
+        }
+		
+		$else
 
+		$end
         
     }
 }

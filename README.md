@@ -1,6 +1,8 @@
 #Introduction 
 CodeRobot , code generator 
 
+here have EF template 
+
 #Getting Started
 you can use it:
 1.	modify the templates/someproject

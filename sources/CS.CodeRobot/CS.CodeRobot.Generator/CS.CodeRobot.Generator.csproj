@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JinianNet.JNTemplate, Version=1.3.1.0, Culture=neutral, PublicKeyToken=2b90a65531efdba4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JinianNet.JNTemplate.1.3.1\lib\net40\JinianNet.JNTemplate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="Scriban, Version=0.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Scriban.0.2.2\lib\net35\Scriban.dll</HintPath>
@@ -72,12 +76,10 @@
       <Project>{aa652f8e-0b96-484c-a146-c4183e4a0a25}</Project>
       <Name>DatabaseSchemaReader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\JNTemplate\src\JinianNet.JNTemplate\JinianNet.JNTemplate.csproj">
-      <Project>{3e78fb09-8f3c-4ec8-9f0a-626ec58f33ba}</Project>
-      <Name>JinianNet.JNTemplate</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

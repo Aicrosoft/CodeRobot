@@ -55,7 +55,9 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Templates\CSCMS\AssemblyInfo.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -131,9 +133,9 @@
     <Content Include="robot_128px.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\JNTemplate\src\JinianNet.JNTemplate\JinianNet.JNTemplate.csproj">
-      <Project>{3e78fb09-8f3c-4ec8-9f0a-626ec58f33ba}</Project>
-      <Name>JinianNet.JNTemplate</Name>
+    <ProjectReference Include="..\..\..\..\CS.Utility\sources\CS.Utility\CS.Utility.csproj">
+      <Project>{10058f6a-905f-4afd-83d8-05d6fe7f651d}</Project>
+      <Name>CS.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\CS.CodeRobot.Generator\CS.CodeRobot.Generator.csproj">
       <Project>{e13bce09-4324-472c-9020-b208bfbaf6f3}</Project>

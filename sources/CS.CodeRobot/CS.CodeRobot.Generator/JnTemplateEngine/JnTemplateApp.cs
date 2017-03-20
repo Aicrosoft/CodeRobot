@@ -11,6 +11,19 @@ namespace CS.CodeRobot.JnTemplateEngine
     {
         private static readonly TinyCache<ITemplate> Cache = new TinyCache<ITemplate>();
 
+        static JnTemplateApp()
+        {
+            var conf = JinianNet.JNTemplate.Configuration.EngineConfig.CreateDefault();
+            //禁止清除标签前后空白字符
+            conf.StripWhiteSpace = false;
+
+            //出错时是否抛出异常
+            conf.ThrowExceptions = true;
+
+            Engine.Configure(conf);
+        }
+
+
 
         public static Template CreateTemplate(string absFilePath)
         {
@@ -22,17 +35,6 @@ namespace CS.CodeRobot.JnTemplateEngine
             });
             var tmp =  (Template)template;
             return tmp;
-        }
-
-        public static string Render(string absFilePath, dynamic obj)
-        {
-            var type = obj.GetType();
-            
-            
-
-
-
-            return null;
         }
 
 

@@ -56,11 +56,37 @@ namespace CS.CodeRobot.Generators
         {
             return table.GetPkExpress();
         }
-        public string GetPkExpress(DatabaseTable table,string entityName)
+        public string GetPkExpress(DatabaseTable table, string entityName)
         {
             return table.GetPkExpress(entityName);
         }
 
+        public static bool HasOnePrimaryKey(DatabaseTable table)
+        {
+            var pks = table.FindPrimaryKeys();
+            //Console.WriteLine($"{table.Name}:{pks.Count}");
+            return pks.Count == 1;
+        }
+
+        public static string GetPkName(DatabaseTable table)
+        {
+            return table.FindPrimaryKeys().FirstOrDefault()?.Name;
+        }
+
+        /// <summary>
+        /// 找到第一个默认的主键
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public static DatabaseColumn FindPrimaryKey(DatabaseTable table)
+        {
+            return table.FindPrimaryKeys().FirstOrDefault();
+        }
+
+        public static string GetOnePkType(DatabaseTable table)
+        {
+            return FindPrimaryKey(table).ToDotNetType();
+        }
 
         /// <summary>
         /// 生成枚举类型
@@ -93,6 +119,11 @@ namespace CS.CodeRobot.Generators
 
     }
 
+
+
+    /// <summary>
+    /// 扩展，不能直接调用的
+    /// </summary>
     public static class MySqlDatabaseHelperExt
     {
 
@@ -118,7 +149,7 @@ namespace CS.CodeRobot.Generators
         public static string GetProxyKey(this DatabaseTable table, string modelParamName = null)
         {
             var pks = table.GetPrimaryKeyNames();
-            var ids =  string.Join(", ", string.IsNullOrWhiteSpace(modelParamName) ? pks.Select(x => x.ToLower()) : pks.Select(x => $"{modelParamName}.{x}"));
+            var ids = string.Join(", ", string.IsNullOrWhiteSpace(modelParamName) ? pks.Select(x => x.ToLower()) : pks.Select(x => $"{modelParamName}.{x}"));
             return ids;
         }
 
@@ -180,19 +211,25 @@ namespace CS.CodeRobot.Generators
 
         public static List<DatabaseColumn> FindPrimaryKeys(this DatabaseTable table)
         {
-            var indexCols=  table.GetPrimaryKeyNames();
+            var indexCols = table.GetPrimaryKeyNames();
             return table.Columns.Where(x => indexCols.Contains(x.Name)).ToList();
         }
 
+
+
+
         public static string[] GetPrimaryKeyNames(this DatabaseTable table)
         {
-           return table.Indexes.FirstOrDefault(x => x.IndexType == "PRIMARY")?.Columns.Select(x => x.Name).ToArray();
+            return table.Indexes.FirstOrDefault(x => x.IndexType == "PRIMARY")?.Columns.Select(x => x.Name).ToArray();
         }
 
         public static bool HasPrimaryKey(this DatabaseTable table)
         {
             return table.FindPrimaryKeys().Count > 0;
         }
+
+
+
 
 
 

@@ -29,7 +29,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
+   <ItemGroup>
+    <Reference Include="CS.Utility, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CS.Utility.Extension.1.0.7\lib\net4.5\CS.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CS.Utility.Extension, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CS.Utility.Extension.1.0.7\lib\net45\CS.Utility.Extension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CS.Utility.Extension.1.0.7\lib\net4.5\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>

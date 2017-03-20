@@ -1,7 +1,10 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Reflection;
+using CS.Extension;
 using CS.Logging;
+using CS.Utils;
 using Microsoft.JScript;
 
 namespace CS.CodeRobot.JsGenerators
@@ -48,8 +51,10 @@ namespace CS.CodeRobot.JsGenerators
                 GenerateInMemory = true
             };
             //opt.ReferencedAssemblies.Add("System.dll");
-            opt.ReferencedAssemblies.Add("CS.Utility.dll");
-            opt.ReferencedAssemblies.Add("CS.CodeRobot.Generator.dll");
+            //Assembly.LoadFile(FileHelper.GetFullPath("~/CS.Utility.dll"));
+            //Assembly.LoadFile(FileHelper.GetFullPath("~/CS.CodeRobot.Generator.dll"));
+            opt.ReferencedAssemblies.Add(typeof(AppHelper).Assembly.Location);
+            opt.ReferencedAssemblies.Add(typeof(JsGenerator).Assembly.Location); //非GAC必须全路径
             var content = File.ReadAllText(jsFilePath);
             var result = JsCompiler.CompileAssemblyFromSource(opt, content);
             if (result.Errors.Count > 0)
