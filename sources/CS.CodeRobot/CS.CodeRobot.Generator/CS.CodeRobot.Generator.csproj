@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DatabaseSchemaReader, Version=2.3.0.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DatabaseSchemaReader.2.3.0\lib\net45\DatabaseSchemaReader.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="JinianNet.JNTemplate, Version=1.3.1.0, Culture=neutral, PublicKeyToken=2b90a65531efdba4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JinianNet.JNTemplate.1.3.1\lib\net40\JinianNet.JNTemplate.dll</HintPath>
       <Private>True</Private>
@@ -64,17 +68,13 @@
     <Compile Include="SchemaEngine\DataSchemaApp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\github.com\CS.Utility\sources\CS.Utility.Extension\CS.Utility.Extension.csproj">
+    <ProjectReference Include="..\..\..\..\CS.Utility\sources\CS.Utility.Extension\CS.Utility.Extension.csproj">
       <Project>{26edf82e-9da2-41b5-a28d-00e038c01ecc}</Project>
       <Name>CS.Utility.Extension</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\github.com\CS.Utility\sources\CS.Utility\CS.Utility.csproj">
+    <ProjectReference Include="..\..\..\..\CS.Utility\sources\CS.Utility\CS.Utility.csproj">
       <Project>{10058f6a-905f-4afd-83d8-05d6fe7f651d}</Project>
       <Name>CS.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\DatabaseSchemaReader\DatabaseSchemaReader\DatabaseSchemaReader.csproj">
-      <Project>{aa652f8e-0b96-484c-a146-c4183e4a0a25}</Project>
-      <Name>DatabaseSchemaReader</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -28,11 +28,11 @@ namespace ${model.NameSpace}.${dbSetting.Name}
         /// 载入全部
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<${modelClassName}> LoadAll()
+        public ${modelClassName}[] LoadAll()
         {
             using (var db = new ${clsDbContext}())
             {
-                return db.${modelClassName}.ToList();
+                return db.${modelClassName}.ToArray();
             }
         }
 
@@ -87,7 +87,7 @@ namespace ${model.NameSpace}.${dbSetting.Name}
         /// <param name="take"></param>
         /// <param name="ascOrder">默认倒序</param>
         /// <returns></returns>
-        public virtual IEnumerable<$modelClassName> Get(Func<$modelClassName, bool> predicate, Func<$modelClassName, int> descOrderByKey, int take = 1, bool ascOrder = false)
+        public virtual ${modelClassName}[] Get(Func<$modelClassName, bool> predicate, Func<$modelClassName, int> descOrderByKey, int take = 1, bool ascOrder = false)
         {
             using (var db = new ${clsDbContext}())
             {
@@ -104,12 +104,12 @@ namespace ${model.NameSpace}.${dbSetting.Name}
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual IEnumerable<$modelClassName> Get(Func<$modelClassName, bool> predicate)
+        public virtual ${modelClassName}[] Get(Func<$modelClassName, bool> predicate)
         {
             using (var db = new ${clsDbContext}())
             {
-				var items = db.${modelClassName}.Where(predicate).ToList();
-                return items;
+				var items = db.${modelClassName}.Where(predicate);
+                return items.ToArray();
             }
         }
 		
