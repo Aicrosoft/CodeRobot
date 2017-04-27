@@ -28,7 +28,7 @@ namespace ${model.NameSpace}.${dbSetting.Name}
         /// 载入全部
         /// </summary>
         /// <returns></returns>
-        public ${modelClassName}[] LoadAll()
+        public virtual ${modelClassName}[] LoadAll()
         {
             using (var db = new ${clsDbContext}())
             {
@@ -36,7 +36,19 @@ namespace ${model.NameSpace}.${dbSetting.Name}
             }
         }
 
-
+		/// <summary>
+        /// 按条件统计数量
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+	    public virtual int Count(Func<${modelClassName},bool> predicate)
+	    {
+            using (var db = new ${clsDbContext}())
+            {
+                return db.${modelClassName}.Count(predicate);
+            }
+        }
+		
 
         /// <summary>
         /// 主键获取
@@ -84,17 +96,18 @@ namespace ${model.NameSpace}.${dbSetting.Name}
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="descOrderByKey"></param>
-        /// <param name="take"></param>
         /// <param name="ascOrder">默认倒序</param>
+        /// <param name="take">取得N条</param>
+        /// <param name="skip">跳过前N条</param>
         /// <returns></returns>
-        public virtual ${modelClassName}[] Get(Func<$modelClassName, bool> predicate, Func<$modelClassName, int> descOrderByKey, int take = 1, bool ascOrder = false)
+        public virtual ${modelClassName}[] Get(Func<$modelClassName, bool> predicate, Func<$modelClassName, int> descOrderByKey,bool ascOrder = false, int take = 1, int skip = 0)
         {
             using (var db = new ${clsDbContext}())
             {
                 var items = ascOrder ?
-                    db.${modelClassName}.Where(predicate).OrderBy(descOrderByKey).Take(take)
+                    db.${modelClassName}.Where(predicate).OrderBy(descOrderByKey).Skip(skip).Take(take)
                     :
-                    db.${modelClassName}.Where(predicate).OrderByDescending(descOrderByKey).Take(take);
+                    db.${modelClassName}.Where(predicate).OrderByDescending(descOrderByKey).Skip(skip).Take(take);
                 return items.ToArray();
             }
         }
