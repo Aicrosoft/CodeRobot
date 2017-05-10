@@ -6,7 +6,7 @@
   </DbConns>
   <Name>CSCMS</Name>
   <!-- 项目源代码所在根目录 -->
-  <OutputRootDirectory>D:\projects\cszi.visualstudio.com\CSCMSV6\sources\CSCMS\</OutputRootDirectory>
+  <OutputRootDirectory>D:\projects\visualstudio.com\CSCMSV6\sources\CSCMS\</OutputRootDirectory>
   <Namespace>CS.CMS</Namespace>
   <Company>cszi.com</Company>
   <Copyright>cszi.com</Copyright>

@@ -3,7 +3,7 @@ using ${pi.Namespace}.Model.${dbSetting.Name};
 
 //-------------------------------------------------------------------------------------------
 // 以下代码为自动生成，请勿修改。
-// autogeneration ${model.Now.ToString("yyyy-MM-dd HH:mm:ss") } powered by atwind@cszi.com 
+// powered by atwind@cszi.com 
 //-------------------------------------------------------------------------------------------
 
 namespace ${model.NameSpace}.${dbSetting.Name}
